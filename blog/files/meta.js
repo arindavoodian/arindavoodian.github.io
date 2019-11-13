@@ -56,7 +56,7 @@
 	};
  
 	// Object containing all website meta info
-	var websiteMeta = {"adobe-muse-alternatives-for-mac.html":"As you probably already know, Adobe is discontinuing development of Muse after just eight short years. Understandably users are not happy and are look","rapidweaver-8-coming-soon.html":"I know it's been a while since the last RapidWeaver 7 update, and there's a good reason for that… It's because we've been heads down working away on R","archive-june-2018.html":"Archives for June 2018"};
+	var websiteMeta = {"a73a0fd1cedcd6cf3632e7bd01bc3b59-2.html":"This is just the initial post for my portfolio blog? I guess it is. Anyway just testing functionality before posting anything else. Although, this may","archive-november-2019.html":"Archives for November 2019"};
  
 	// pageId must match the key in websiteMeta object
 	var url = window.location.pathname;
