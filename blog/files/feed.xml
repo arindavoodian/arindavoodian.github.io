@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" 
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+    xmlns:admin="http://webns.net/mvcb/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+	<channel>
+<title>My RSS Feed</title><link>https://arindavoodian.github.io/index.html</link><description>Hot News&#x21;</description><dc:language>en</dc:language><language>en</language><dc:date>2018-06-07T03:48:32-07:00</dc:date><admin:generatorAgent rdf:resource="http://www.realmacsoftware.com/" />
+<sy:updatePeriod>hourly</sy:updatePeriod>
+<sy:updateFrequency>1</sy:updateFrequency>
+<sy:updateBase>2000-01-01T12:00+00:00</sy:updateBase>
+<lastBuildDate>Thu, 7 Jun 2018 03:45:08 -0700</lastBuildDate><item><title>Adobe Muse Alternative for Mac</title><dc:subject>Blog</dc:subject><dc:date>2018-06-07T03:48:32-07:00</dc:date><link>https://arindavoodian.github.io/blog/files/adobe-muse-alternatives-for-mac.html#unique-entry-id-1</link><guid isPermaLink="true">https://arindavoodian.github.io/blog/files/adobe-muse-alternatives-for-mac.html#unique-entry-id-1</guid><content:encoded><![CDATA[As you probably already know, Adobe is discontinuing development of Muse after just eight short years. Understandably users are not happy and are looking for a serious alternative.]]></content:encoded></item><item><title>RapidWeaver 8 is Coming Soon.</title><dc:subject>Blog</dc:subject><dc:date>2018-06-07T03:45:51-07:00</dc:date><link>https://arindavoodian.github.io/blog/files/rapidweaver-8-coming-soon.html#unique-entry-id-0</link><guid isPermaLink="true">https://arindavoodian.github.io/blog/files/rapidweaver-8-coming-soon.html#unique-entry-id-0</guid><content:encoded><![CDATA[I know it's been a while since the last RapidWeaver 7 update, and there's a good reason for that&hellip; It's because we've been heads down working away on RapidWeaver 8, and oh boy is it shaping up to be a great release. As always it's taken us longer than we'd like to ship it to you guys, but quality software always takes longer to build than any of us would like!]]></content:encoded></item></channel>
+</rss>
