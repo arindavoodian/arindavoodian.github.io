@@ -56,7 +56,7 @@
 	};
  
 	// Object containing all website meta info
-	var websiteMeta = {"5d5428ef38486b1a472d29ee5f4c5d63-3.html":"Coding interviews suck.","a73a0fd1cedcd6cf3632e7bd01bc3b59-2.html":"This is just the initial post for my portfolio blog? I guess it is. Anyway just testing functionality before posting anything else. Although, this may","archive-november-2019.html":"Archives for November 2019"};
+	var websiteMeta = {"5d5428ef38486b1a472d29ee5f4c5d63-3.html":"The idea of coding interviews disturbs me. Yes, companies need to access your abilities, but coding interviews invade your privacy. Just imagine, some","a73a0fd1cedcd6cf3632e7bd01bc3b59-2.html":"This is just the initial post for my portfolio blog? I guess it is. Anyway just testing functionality before posting anything else. Although, this may","archive-november-2019.html":"Archives for November 2019"};
  
 	// pageId must match the key in websiteMeta object
 	var url = window.location.pathname;
