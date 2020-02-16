@@ -56,7 +56,7 @@
 	};
  
 	// Object containing all website meta info
-	var websiteMeta = {"initial-post.html":"\tThis is just the initial post for my portfolio blog? I guess it is. Anyway just testing functionality before posting anything else. Although, this ma","archive-november-2019.html":"Archives for November 2019"};
+	var websiteMeta = {"category-work.html":"A list of posts in category &ldquo;Work&rdquo;","category-humor.html":"A list of posts in category &ldquo;Humor&rdquo;","archive-november-2019.html":"Archives for November 2019","tag-initialcommit.html":"Posts tagged &ldquo;initialCommit&rdquo;","initial-post.html":"\tThis is just the initial post for my portfolio blog? I guess it is. Anyway just testing functionality before posting anything else. Although, this ma","category-apple.html":"A list of posts in category &ldquo;Apple&rdquo;","category-personal.html":"A list of posts in category &ldquo;Personal&rdquo;","tag--nonsense.html":"Posts tagged &ldquo; nonsense&rdquo;"};
  
 	// pageId must match the key in websiteMeta object
 	var url = window.location.pathname;
