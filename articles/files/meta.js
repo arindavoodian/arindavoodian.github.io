@@ -56,7 +56,7 @@
 	};
  
 	// Object containing all website meta info
-	var websiteMeta = {"a73a0fd1cedcd6cf3632e7bd01bc3b59-2.html":"\tThis is just the initial post for my portfolio blog? I guess it is. Anyway just testing functionality before posting anything else. Although, this ma","archive-november-2019.html":"Archives for November 2019"};
+	var websiteMeta = {"initial-post.html":"\tThis is just the initial post for my portfolio blog? I guess it is. Anyway just testing functionality before posting anything else. Although, this ma","archive-november-2019.html":"Archives for November 2019"};
  
 	// pageId must match the key in websiteMeta object
 	var url = window.location.pathname;

@@ -2,7 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>https://arindavoodian.github.io/index.html</loc>
-		<lastmod>2020-02-16</lastmod>
 	</url>
 	<url>
 		<loc>https://arindavoodian.github.io/photos/index.html</loc>
@@ -45,5 +44,11 @@
 	</url>
 	<url>
 		<loc>https://arindavoodian.github.io/articles/index.html</loc>
+	</url>
+	<url>
+		<loc>https://arindavoodian.github.io/articles/files/initial-post.html</loc>
+	</url>
+	<url>
+		<loc>https://arindavoodian.github.io/articles/files/archive-november-2019.html</loc>
 	</url>
 </urlset>
