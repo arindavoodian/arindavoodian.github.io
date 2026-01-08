@@ -559,14 +559,19 @@ function showBlogSection(statusEl, galleryEl) {
 function initTheme(button) {
   const root = document.documentElement;
 
-  // Load stored preference
-  const stored = localStorage.getItem("portfolio-theme");
-  if (stored === "light" || stored === "dark") {
-    root.setAttribute("data-theme", stored);
-  }
-
+  // Always follow system preference by default (no localStorage)
   updateThemeIcon();
 
+  // Listen for system theme changes
+  const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  darkModeQuery.addEventListener("change", (e) => {
+    // Only update if user hasn't manually set a theme
+    if (!root.getAttribute("data-theme")) {
+      updateThemeIcon();
+    }
+  });
+
+  // Manual toggle (resets to system preference on page reload)
   button.addEventListener("click", () => {
     const current = root.getAttribute("data-theme");
     const next =
@@ -578,7 +583,6 @@ function initTheme(button) {
         ? "light"
         : "dark";
     root.setAttribute("data-theme", next);
-    localStorage.setItem("portfolio-theme", next);
     updateThemeIcon();
   });
 

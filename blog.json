@@ -1,14 +1,26 @@
 {
   "posts": [
     {
-      "id": "example-post-1",
+      "id": "example-post-2",
       "date": "2026-01-08",
-      "title": "Example Post",
-      "text": "This is an example blog post. You can add your thoughts, observations, or stories here. The text supports multiple paragraphs.",
+      "title": "Welcome to My Blog",
+      "text": "This is where I share my thoughts, observations, and captured moments. Each post might include photos from my travels, daily life, or just things that caught my eye.\n\nThe design is intentionally minimal—just enough structure to let the content breathe, but nothing that gets in the way of the experience.",
       "photos": [
         {
           "src": "photos/Street/ARIN0743.jpg",
-          "alt": "Example photo"
+          "alt": "Street photography"
+        }
+      ]
+    },
+    {
+      "id": "example-post-1",
+      "date": "2026-01-07",
+      "title": "Landscapes",
+      "text": "Sometimes you find the perfect moment when light and landscape align.",
+      "photos": [
+        {
+          "src": "photos/Landscapes/ARIN0829.jpg",
+          "alt": "Landscape view"
         }
       ]
     }
