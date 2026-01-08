@@ -1,11 +1,5 @@
 // === CONFIGURATION ===
-const GITHUB_USER = "arindavoodian";
-const GITHUB_REPO = "arindavoodian.github.io";
-const GITHUB_BRANCH = "master";
-const PHOTOS_ROOT = "photos";
-const GALLERY_JSON_PATH = "gallery.json";
 const BLOG_JSON_PATH = "blog.json";
-const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"];
 const LINK_BUTTONS = [
   { label: "GitHub", href: "https://github.com/arindavoodian" },
   { label: "Instagram", href: "https://www.instagram.com/arindavoodian", newTab: true },
@@ -26,14 +20,10 @@ const ABOUT_CONTENT = {
   ],
 };
 
-const apiBase = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents`;
-const categoryCache = new Map();
-let manifestPromise = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   const statusEl = document.getElementById("status");
   const galleryEl = document.getElementById("gallery");
-  const categoryListEl = document.getElementById("categoryList");
   const aboutButton = document.getElementById("aboutButton");
   const blogButton = document.getElementById("blogButton");
   const linkButtonsEl = document.getElementById("linkButtons");
@@ -45,14 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Blog button handler
   blogButton?.addEventListener("click", () => {
-    clearActiveCategoryButtons(categoryListEl);
     blogButton.classList.add("active");
     aboutButton.classList.remove("active");
     showBlogSection(statusEl, galleryEl);
   });
 
   aboutButton?.addEventListener("click", () => {
-    clearActiveCategoryButtons(categoryListEl);
     aboutButton.classList.add("active");
     blogButton?.classList.remove("active");
     showAboutSection(statusEl, galleryEl);
@@ -61,94 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Lightbox handling
   initLightbox();
 
-  // Load categories for photo gallery
-  loadCategories()
-    .then((categories) => {
-      if (!categories.length) {
-        // Still render category section but with a message
-        return;
-      }
-
-      renderCategoryButtons(categories, categoryListEl);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-
-  // Handle category selection
-  function selectCategory(categoryName) {
-    syncCategoryButtonState(categoryListEl, categoryName);
-    aboutButton.classList.remove("active");
-    blogButton?.classList.remove("active");
-
-    setStatusMessage(statusEl, `Loading "${categoryName}"…`);
-    galleryEl.classList.remove("about-view");
-    galleryEl.innerHTML = "";
-
-    loadCategoryImages(categoryName)
-      .then((images) => {
-        if (!images.length) {
-          setStatusMessage(statusEl, `No images found in "${categoryName}" yet.`);
-          return;
-        }
-
-        setStatusMessage(statusEl, "");
-        renderGallery(images, galleryEl, categoryName);
-      })
-      .catch((err) => {
-        console.error(err);
-        setStatusMessage(statusEl, `Could not load images for "${categoryName}".`);
-      });
-  }
-
-  // Public-ish: make the callback visible to inline usage
-  window._selectCategory = selectCategory;
-
   // Load blog by default
   blogButton?.classList.add("active");
   showBlogSection(statusEl, galleryEl);
 });
 
-// === Gallery manifest helpers ===
-
-async function fetchJson(url) {
-  const response = await fetch(url, {
-    headers: {
-      Accept: "application/vnd.github+json",
-      "Cache-Control": "max-age=300",
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`GitHub API error: ${response.status}`);
-  }
-  return response.json();
-}
-
-async function loadGalleryManifest() {
-  if (!manifestPromise) {
-    manifestPromise = fetch(GALLERY_JSON_PATH, { cache: "no-store" })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to load gallery manifest: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => normalizeManifest(data));
-  }
-  return manifestPromise;
-}
-
-function normalizeManifest(data) {
-  if (!data || typeof data !== "object") {
-    throw new Error("Gallery manifest is empty or malformed");
-  }
-
-  const categories = data.categories && typeof data.categories === "object"
-    ? data.categories
-    : {};
-
-  return { categories };
-}
 
 function renderLinkButtons(buttonConfigs, container) {
   if (!container || !Array.isArray(buttonConfigs)) {
@@ -197,8 +102,8 @@ function showAboutSection(statusEl, galleryEl) {
     .join("\n");
   const highlightsHtml = highlights.length
     ? `<ul class="about-highlights">${highlights
-        .map((item) => `<li>${item}</li>`)
-        .join("")}</ul>`
+      .map((item) => `<li>${item}</li>`)
+      .join("")}</ul>`
     : "";
   galleryEl.innerHTML = `
     <article class="about-card">
@@ -209,179 +114,8 @@ function showAboutSection(statusEl, galleryEl) {
   `;
 }
 
-function clearActiveCategoryButtons(listEl) {
-  if (!listEl) {
-    return;
-  }
-  listEl.querySelectorAll(".category-button").forEach((btn) => {
-    btn.classList.remove("active");
-  });
-}
 
-function syncCategoryButtonState(listEl, categoryName) {
-  if (!listEl) {
-    return;
-  }
-  listEl.querySelectorAll(".category-button").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.category === categoryName);
-  });
-}
 
-async function loadCategories() {
-  try {
-    const categories = await loadCategoriesFromGitHub();
-    if (categories.length) {
-      return categories;
-    }
-  } catch (err) {
-    console.warn("GitHub API unavailable, falling back to gallery manifest", err);
-  }
-
-  return loadCategoriesFromManifest();
-}
-
-async function loadCategoryImages(categoryName) {
-  if (categoryCache.has(categoryName)) {
-    return categoryCache.get(categoryName);
-  }
-
-  try {
-    const images = await loadCategoryImagesFromGitHub(categoryName);
-    if (images.length) {
-      categoryCache.set(categoryName, images);
-      return images;
-    }
-  } catch (err) {
-    console.warn(`GitHub API unavailable for ${categoryName}, using manifest`, err);
-  }
-
-  const fallbackImages = await loadCategoryImagesFromManifest(categoryName);
-  categoryCache.set(categoryName, fallbackImages);
-  return fallbackImages;
-}
-
-async function loadCategoriesFromGitHub() {
-  const url = `${apiBase}/${encodeURIComponent(
-    PHOTOS_ROOT
-  )}?ref=${encodeURIComponent(GITHUB_BRANCH)}`;
-  const items = await fetchJson(url);
-
-  const categories = items
-    .filter((item) => item.type === "dir")
-    .map((dir) => ({
-      name: dir.name,
-      path: dir.path,
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
-
-  return categories;
-}
-
-async function loadCategoryImagesFromGitHub(categoryName) {
-  const path = `${PHOTOS_ROOT}/${categoryName}`;
-  const url = `${apiBase}/${encodeURIComponent(
-    path
-  )}?ref=${encodeURIComponent(GITHUB_BRANCH)}`;
-  const items = await fetchJson(url);
-
-  return items
-    .filter((item) => item.type === "file")
-    .filter((item) => {
-      const lower = item.name.toLowerCase();
-      return IMAGE_EXTENSIONS.some((ext) => lower.endsWith(ext));
-    })
-    .map((file) => {
-      const normalizedPath = normalizePhotoSrc(file.path);
-      return {
-        name: fileNameWithoutExtension(file.name),
-        path: normalizedPath,
-        url: normalizedPath,
-        description: "",
-      };
-    })
-    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
-}
-
-async function loadCategoriesFromManifest() {
-  const manifest = await loadGalleryManifest();
-
-  return Object.keys(manifest.categories)
-    .map((name) => ({ name }))
-    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
-}
-
-async function loadCategoryImagesFromManifest(categoryName) {
-  const manifest = await loadGalleryManifest();
-  const entries = manifest.categories[categoryName] || [];
-
-  return entries.map((entry) => {
-    const sanitizedSrc = normalizePhotoSrc(entry.src);
-    const displayName = entry.title?.trim() || fileNameFromPath(sanitizedSrc);
-
-    return {
-      name: displayName,
-      path: sanitizedSrc,
-      url: sanitizedSrc,
-      description: entry.description?.trim() || "",
-    };
-  });
-}
-
-// === UI rendering ===
-
-function renderCategoryButtons(categories, containerEl) {
-  containerEl.innerHTML = "";
-
-  categories.forEach((cat) => {
-    const button = document.createElement("button");
-    button.className = "category-button";
-    button.dataset.category = cat.name;
-    button.type = "button";
-    button.textContent = cat.name;
-
-    button.addEventListener("click", () => {
-      window._selectCategory(cat.name);
-    });
-
-    containerEl.appendChild(button);
-  });
-}
-
-function renderGallery(images, containerEl, categoryName) {
-  containerEl.classList.remove("about-view");
-  containerEl.innerHTML = "";
-
-  images.forEach((img) => {
-    const item = document.createElement("div");
-    item.className = "gallery-item";
-
-    const image = document.createElement("img");
-    image.src = img.url;
-    image.loading = "lazy";
-    image.alt = `${categoryName} – ${img.name}`;
-
-    item.appendChild(image);
-    containerEl.appendChild(item);
-
-    item.addEventListener("click", () => {
-      const caption = img.description || img.name;
-      openLightbox(img.url, caption);
-    });
-  });
-}
-
-function fileNameWithoutExtension(name) {
-  const lastDot = name.lastIndexOf(".");
-  if (lastDot === -1) return name;
-  return name.slice(0, lastDot);
-}
-
-function fileNameFromPath(path) {
-  if (!path) return "";
-  const parts = path.split("/");
-  const last = parts[parts.length - 1];
-  return fileNameWithoutExtension(last);
-}
 
 function normalizePhotoSrc(src) {
   if (!src || typeof src !== "string") return "";
@@ -578,10 +312,10 @@ function initTheme(button) {
       current === "dark"
         ? "light"
         : current === "light"
-        ? "dark"
-        : prefersDark()
-        ? "light"
-        : "dark";
+          ? "dark"
+          : prefersDark()
+            ? "light"
+            : "dark";
     root.setAttribute("data-theme", next);
     updateThemeIcon();
   });
