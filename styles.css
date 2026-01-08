@@ -87,15 +87,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: var(--radius-lg);
   padding: 16px 24px;
   position: sticky;
   top: 20px;
   z-index: 10;
-  box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(10px);
   transition: box-shadow 0.2s ease;
 }
 
@@ -198,14 +196,13 @@ body {
 /* Sidebar */
 
 .sidebar {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: var(--radius-lg);
   padding: 20px;
   height: fit-content;
   position: sticky;
   top: 96px;
-  box-shadow: var(--shadow-sm);
 }
 
 .sidebar-title {
@@ -387,6 +384,7 @@ body {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
