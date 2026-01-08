@@ -1,0 +1,16 @@
+{
+  "posts": [
+    {
+      "id": "example-post-1",
+      "date": "2026-01-08",
+      "title": "Example Post",
+      "text": "This is an example blog post. You can add your thoughts, observations, or stories here. The text supports multiple paragraphs.",
+      "photos": [
+        {
+          "src": "photos/Street/ARIN0743.jpg",
+          "alt": "Example photo"
+        }
+      ]
+    }
+  ]
+}

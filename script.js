@@ -4,6 +4,7 @@ const GITHUB_REPO = "arindavoodian.github.io";
 const GITHUB_BRANCH = "master";
 const PHOTOS_ROOT = "photos";
 const GALLERY_JSON_PATH = "gallery.json";
+const BLOG_JSON_PATH = "blog.json";
 const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"];
 const LINK_BUTTONS = [
   { label: "GitHub", href: "https://github.com/arindavoodian" },
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const galleryEl = document.getElementById("gallery");
   const categoryListEl = document.getElementById("categoryList");
   const aboutButton = document.getElementById("aboutButton");
+  const blogButton = document.getElementById("blogButton");
   const linkButtonsEl = document.getElementById("linkButtons");
   const themeToggleButton = document.getElementById("themeToggle");
 
@@ -41,53 +43,52 @@ document.addEventListener("DOMContentLoaded", () => {
   initTheme(themeToggleButton);
   renderLinkButtons(LINK_BUTTONS, linkButtonsEl);
 
+  // Blog button handler
+  blogButton?.addEventListener("click", () => {
+    clearActiveCategoryButtons(categoryListEl);
+    blogButton.classList.add("active");
+    aboutButton.classList.remove("active");
+    showBlogSection(statusEl, galleryEl);
+  });
+
   aboutButton?.addEventListener("click", () => {
     clearActiveCategoryButtons(categoryListEl);
+    aboutButton.classList.add("active");
+    blogButton?.classList.remove("active");
     showAboutSection(statusEl, galleryEl);
   });
 
   // Lightbox handling
   initLightbox();
 
-  // Load categories
+  // Load categories for photo gallery
   loadCategories()
     .then((categories) => {
       if (!categories.length) {
-        setStatusMessage(
-          statusEl,
-          "No categories found yet. Add subfolders inside the “photos” folder and commit."
-        );
+        // Still render category section but with a message
         return;
       }
 
-      setStatusMessage(statusEl, "Select a category to view photos.");
       renderCategoryButtons(categories, categoryListEl);
-
-      // Auto-select first category
-      if (categories[0]) {
-        selectCategory(categories[0].name);
-      }
     })
     .catch((err) => {
       console.error(err);
-      setStatusMessage(
-        statusEl,
-        "There was a problem loading images. Check your configuration or try again."
-      );
     });
 
   // Handle category selection
   function selectCategory(categoryName) {
     syncCategoryButtonState(categoryListEl, categoryName);
+    aboutButton.classList.remove("active");
+    blogButton?.classList.remove("active");
 
-    setStatusMessage(statusEl, `Loading “${categoryName}”…`);
+    setStatusMessage(statusEl, `Loading "${categoryName}"…`);
     galleryEl.classList.remove("about-view");
     galleryEl.innerHTML = "";
 
     loadCategoryImages(categoryName)
       .then((images) => {
         if (!images.length) {
-          setStatusMessage(statusEl, `No images found in “${categoryName}” yet.`);
+          setStatusMessage(statusEl, `No images found in "${categoryName}" yet.`);
           return;
         }
 
@@ -96,12 +97,16 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch((err) => {
         console.error(err);
-        setStatusMessage(statusEl, `Could not load images for “${categoryName}”.`);
+        setStatusMessage(statusEl, `Could not load images for "${categoryName}".`);
       });
   }
 
   // Public-ish: make the callback visible to inline usage
   window._selectCategory = selectCategory;
+
+  // Load blog by default
+  blogButton?.classList.add("active");
+  showBlogSection(statusEl, galleryEl);
 });
 
 // === Gallery manifest helpers ===
@@ -426,6 +431,127 @@ function openLightbox(src, caption) {
   if (typeof window._openLightbox === "function") {
     window._openLightbox(src, caption);
   }
+}
+
+// === Blog ===
+
+async function loadBlogPosts() {
+  try {
+    const response = await fetch(BLOG_JSON_PATH, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`Failed to load blog posts: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.posts || [];
+  } catch (err) {
+    console.error("Error loading blog posts:", err);
+    return [];
+  }
+}
+
+function formatDate(dateString) {
+  try {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  } catch {
+    return dateString;
+  }
+}
+
+function renderBlogPosts(posts, galleryEl) {
+  galleryEl.classList.remove("about-view");
+  galleryEl.innerHTML = "";
+
+  if (!posts || posts.length === 0) {
+    galleryEl.innerHTML = '<p class="status-message">No blog posts yet.</p>';
+    return;
+  }
+
+  // Sort by date, newest first
+  const sortedPosts = [...posts].sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+
+  const container = document.createElement("div");
+  container.className = "blog-container";
+
+  sortedPosts.forEach((post) => {
+    const article = document.createElement("article");
+    article.className = "blog-post";
+
+    // Date
+    if (post.date) {
+      const dateEl = document.createElement("div");
+      dateEl.className = "blog-post-date";
+      dateEl.textContent = formatDate(post.date);
+      article.appendChild(dateEl);
+    }
+
+    // Title
+    if (post.title) {
+      const titleEl = document.createElement("h2");
+      titleEl.className = "blog-post-title";
+      titleEl.textContent = post.title;
+      article.appendChild(titleEl);
+    }
+
+    // Text
+    if (post.text) {
+      const textEl = document.createElement("div");
+      textEl.className = "blog-post-text";
+      textEl.textContent = post.text;
+      article.appendChild(textEl);
+    }
+
+    // Photos
+    if (post.photos && post.photos.length > 0) {
+      const photosContainer = document.createElement("div");
+      photosContainer.className = "blog-post-photos";
+      if (post.photos.length === 1) {
+        photosContainer.classList.add("single-photo");
+      }
+
+      post.photos.forEach((photo) => {
+        const photoWrapper = document.createElement("div");
+        photoWrapper.className = "blog-post-photo";
+
+        const img = document.createElement("img");
+        img.src = normalizePhotoSrc(photo.src);
+        img.alt = photo.alt || post.title || "";
+        img.loading = "lazy";
+
+        photoWrapper.appendChild(img);
+        photosContainer.appendChild(photoWrapper);
+
+        // Click to open lightbox
+        photoWrapper.addEventListener("click", () => {
+          const caption = photo.alt || post.title || "";
+          openLightbox(img.src, caption);
+        });
+      });
+
+      article.appendChild(photosContainer);
+    }
+
+    container.appendChild(article);
+  });
+
+  galleryEl.appendChild(container);
+}
+
+function showBlogSection(statusEl, galleryEl) {
+  setStatusMessage(statusEl, "Loading blog posts…");
+
+  loadBlogPosts()
+    .then((posts) => {
+      setStatusMessage(statusEl, "");
+      renderBlogPosts(posts, galleryEl);
+    })
+    .catch((err) => {
+      console.error(err);
+      setStatusMessage(statusEl, "Could not load blog posts.");
+    });
 }
 
 // === Theme ===
