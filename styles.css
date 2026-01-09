@@ -311,16 +311,11 @@ body {
   padding: 40px 20px;
 }
 
-/* Gallery grid */
+/* Main Content Container */
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
-}
-
-.gallery.about-view {
+.main-content {
   display: block;
+  width: 100%;
 }
 
 .gallery-item {

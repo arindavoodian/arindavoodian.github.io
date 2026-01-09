@@ -22,7 +22,7 @@ const ABOUT_CONTENT = {
 
 document.addEventListener("DOMContentLoaded", () => {
   const statusEl = document.getElementById("status");
-  const galleryEl = document.getElementById("gallery");
+  const mainContentEl = document.getElementById("main-content");
   const aboutButton = document.getElementById("aboutButton");
   const blogButton = document.getElementById("blogButton");
   const linkButtonsEl = document.getElementById("linkButtons");
@@ -33,13 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
   blogButton?.addEventListener("click", () => {
     blogButton.classList.add("active");
     aboutButton?.classList.remove("active");
-    showBlogSection(statusEl, galleryEl);
+    showBlogSection(statusEl, mainContentEl);
   });
 
   aboutButton?.addEventListener("click", () => {
     aboutButton.classList.add("active");
     blogButton?.classList.remove("active");
-    showAboutSection(statusEl, galleryEl);
+    showAboutSection(statusEl, mainContentEl);
   });
 
   // Lightbox handling
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load blog by default
   blogButton?.classList.add("active");
-  showBlogSection(statusEl, galleryEl);
+  showBlogSection(statusEl, mainContentEl);
 });
 
 
@@ -86,12 +86,12 @@ function setStatusMessage(statusEl, message) {
   }
 }
 
-function showAboutSection(statusEl, galleryEl) {
-  if (!statusEl || !galleryEl) {
+function showAboutSection(statusEl, mainContentEl) {
+  if (!statusEl || !mainContentEl) {
     return;
   }
   setStatusMessage(statusEl, "");
-  galleryEl.classList.add("about-view");
+  mainContentEl.innerHTML = "";
   const { heading, paragraphs = [], highlights = [] } = ABOUT_CONTENT;
   const paragraphsHtml = paragraphs
     .map((text) => `<p>${text}</p>`)
@@ -101,7 +101,7 @@ function showAboutSection(statusEl, galleryEl) {
       .map((item) => `<li>${item}</li>`)
       .join("")}</ul>`
     : "";
-  galleryEl.innerHTML = `
+  mainContentEl.innerHTML = `
     <article class="about-card">
       <h3>${heading}</h3>
       ${paragraphsHtml}
@@ -189,12 +189,11 @@ function formatDate(dateString) {
   }
 }
 
-function renderBlogPosts(posts, galleryEl) {
-  galleryEl.classList.remove("about-view");
-  galleryEl.innerHTML = "";
+function renderBlogPosts(posts, mainContentEl) {
+  mainContentEl.innerHTML = "";
 
   if (!posts || posts.length === 0) {
-    galleryEl.innerHTML = '<p class="status-message">No blog posts yet.</p>';
+    mainContentEl.innerHTML = '<p class="status-message">No blog posts yet.</p>';
     return;
   }
 
@@ -267,16 +266,16 @@ function renderBlogPosts(posts, galleryEl) {
     container.appendChild(article);
   });
 
-  galleryEl.appendChild(container);
+  mainContentEl.appendChild(container);
 }
 
-function showBlogSection(statusEl, galleryEl) {
+function showBlogSection(statusEl, mainContentEl) {
   setStatusMessage(statusEl, "Loading blog posts…");
 
   loadBlogPosts()
     .then((posts) => {
       setStatusMessage(statusEl, "");
-      renderBlogPosts(posts, galleryEl);
+      renderBlogPosts(posts, mainContentEl);
     })
     .catch((err) => {
       console.error(err);
