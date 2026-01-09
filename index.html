@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Arin Davoodian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@100..900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <div class="page">
     <header class="topbar">
       <div class="brand">
-        <span class="brand-dot"></span>
+        <span class="brand-symbol">✦</span>
         <span class="brand-text">Arin Davoodian</span>
       </div>
       <div class="topbar-actions">
-        <div id="linkButtons" class="topbar-links" aria-label="External links">
-          <!-- Populated by JS -->
+        <div class="main-nav">
+          <button id="blogButton" class="nav-button active">Blog</button>
+          <button id="aboutButton" class="nav-button">About Me</button>
         </div>
-        <button id="themeToggle" class="icon-button" aria-label="Toggle dark mode">
-          <span class="icon-moon">☾</span>
-        </button>
       </div>
     </header>
 
     <main class="layout">
-      <aside class="sidebar">
-        <button id="blogButton" class="category-button blog-button">
-          Blog
-        </button>
-        <button id="aboutButton" class="category-button about-button">
-          About Me
-        </button>
-      </aside>
-
       <section class="content">
         <div id="status" class="status-message">
           Loading categories…
@@ -43,6 +39,15 @@
         </div>
       </section>
     </main>
+
+    <footer class="footer">
+      <div id="linkButtons" class="footer-links" aria-label="External links">
+        <!-- Populated by JS -->
+      </div>
+      <div class="copyright">
+        &copy; 2026 Arin Davoodian
+      </div>
+    </footer>
   </div>
 
   <!-- Simple lightbox / modal -->
@@ -54,4 +59,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

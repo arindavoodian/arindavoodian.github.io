@@ -1,7 +1,6 @@
 // === CONFIGURATION ===
 const BLOG_JSON_PATH = "blog.json";
 const LINK_BUTTONS = [
-  { label: "GitHub", href: "https://github.com/arindavoodian" },
   { label: "Instagram", href: "https://www.instagram.com/arindavoodian", newTab: true },
 ];
 const ABOUT_CONTENT = {
@@ -27,16 +26,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const aboutButton = document.getElementById("aboutButton");
   const blogButton = document.getElementById("blogButton");
   const linkButtonsEl = document.getElementById("linkButtons");
-  const themeToggleButton = document.getElementById("themeToggle");
 
-  // Theme handling
-  initTheme(themeToggleButton);
   renderLinkButtons(LINK_BUTTONS, linkButtonsEl);
 
   // Blog button handler
   blogButton?.addEventListener("click", () => {
     blogButton.classList.add("active");
-    aboutButton.classList.remove("active");
+    aboutButton?.classList.remove("active");
     showBlogSection(statusEl, galleryEl);
   });
 
@@ -288,46 +284,4 @@ function showBlogSection(statusEl, galleryEl) {
     });
 }
 
-// === Theme ===
-
-function initTheme(button) {
-  const root = document.documentElement;
-
-  // Always follow system preference by default (no localStorage)
-  updateThemeIcon();
-
-  // Listen for system theme changes
-  const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  darkModeQuery.addEventListener("change", (e) => {
-    // Only update if user hasn't manually set a theme
-    if (!root.getAttribute("data-theme")) {
-      updateThemeIcon();
-    }
-  });
-
-  // Manual toggle (resets to system preference on page reload)
-  button.addEventListener("click", () => {
-    const current = root.getAttribute("data-theme");
-    const next =
-      current === "dark"
-        ? "light"
-        : current === "light"
-          ? "dark"
-          : prefersDark()
-            ? "light"
-            : "dark";
-    root.setAttribute("data-theme", next);
-    updateThemeIcon();
-  });
-
-  function updateThemeIcon() {
-    const iconSpan = button.querySelector(".icon-moon");
-    const current = root.getAttribute("data-theme") || (prefersDark() ? "dark" : "light");
-    iconSpan.textContent = current === "dark" ? "☀︎" : "☾";
-  }
-
-  function prefersDark() {
-    return window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-  }
-}
+// === Theme handling removed, site follows system preference via CSS ===
