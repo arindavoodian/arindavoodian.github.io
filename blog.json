@@ -1,6 +1,26 @@
 {
   "posts": [
     {
+      "id": "three-images-post",
+      "date": "2026-01-10",
+      "title": "A Trio of Moments",
+      "text": "Testing the grid layout with three different perspectives. This post demonstrates how images are displayed when multiple photos are attached to a single entry.",
+      "photos": [
+        {
+          "src": "photos/Street/ARIN0743.jpg",
+          "alt": "Street moment"
+        },
+        {
+          "src": "photos/Landscapes/ARIN0829.jpg",
+          "alt": "Landscape view"
+        },
+        {
+          "src": "photos/Street/ARIN0743.jpg",
+          "alt": "Street moment secondary"
+        }
+      ]
+    },
+    {
       "id": "example-post-2",
       "date": "2026-01-08",
       "title": "Welcome to My Blog",

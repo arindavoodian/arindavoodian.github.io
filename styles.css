@@ -504,6 +504,7 @@ body {
   cursor: zoom-in;
   border: 1px solid var(--border);
   transition: all 0.2s ease;
+  aspect-ratio: 4/3;
 }
 
 .blog-post-photo:hover {
@@ -515,7 +516,8 @@ body {
 .blog-post-photo img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.3s ease;
 }
 
@@ -523,9 +525,19 @@ body {
   transform: scale(1.03);
 }
 
-/* Single photo takes full width */
+/* Single photo takes full width and natural aspect ratio */
 .blog-post-photos.single-photo {
-  grid-template-columns: 1fr;
+  grid-template-columns: 0.7fr;
+  justify-content: center;
+}
+
+.blog-post-photos.single-photo .blog-post-photo {
+  aspect-ratio: auto;
+}
+
+.blog-post-photos.single-photo .blog-post-photo img {
+  height: auto;
+  object-fit: contain;
 }
 
 /* Utility */
