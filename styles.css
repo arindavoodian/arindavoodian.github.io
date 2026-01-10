@@ -236,6 +236,17 @@ body {
   }
 }
 
+@media (max-width: 480px) {
+  .page {
+    padding: 12px 8px;
+  }
+
+  .topbar {
+    padding: 12px;
+    top: 12px;
+  }
+}
+
 /* Footer */
 
 .footer {
@@ -306,7 +317,7 @@ body {
 
 @media (max-width: 768px) {
   .content {
-    padding: 20px;
+    padding: 0;
   }
 }
 
@@ -448,7 +459,7 @@ body {
 
 @media (max-width: 768px) {
   .blog-post {
-    padding: 24px;
+    padding: 24px 16px;
   }
 }
 
