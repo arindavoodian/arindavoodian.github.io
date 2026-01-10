@@ -114,14 +114,18 @@ body {
   letter-spacing: -0.01em;
   font-size: 1.25rem;
   color: var(--fg);
+  display: flex;
+  align-items: center;
 }
 
 .brand-symbol {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--accent);
   margin-right: 8px;
   font-size: 1.125rem;
-  vertical-align: middle;
+  line-height: 1;
 }
 
 .topbar-actions {
