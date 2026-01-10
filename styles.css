@@ -529,10 +529,16 @@ body {
   transform: scale(1.03);
 }
 
-/* Single photo takes full width and natural aspect ratio */
+/* Single photo takes partial width on desktop and full width on mobile */
 .blog-post-photos.single-photo {
   grid-template-columns: 0.7fr;
   justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .blog-post-photos.single-photo {
+    grid-template-columns: 1fr;
+  }
 }
 
 .blog-post-photos.single-photo .blog-post-photo {
