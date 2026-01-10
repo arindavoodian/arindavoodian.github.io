@@ -1,0 +1,21 @@
+{
+    "posts": [
+        {
+            "id": "about-me",
+            "title": "About Me",
+            "text": "I'm an Apple platforms engineer currently working on Xcode tools and frameworks, spending most of my day inside Swift, Xcode, Sketch, and the abstractions that make shipping code faster. I focus on pairing intentional product decisions with platform-specific craftsmanship so each interaction feels purposeful.\n\nBefore Apple I architected and delivered customer-and-pro ecosystems such as Mizo, Uhoh, Point Automotive, and Migo across iOS, macOS, tvOS, and watchOS. Those programs required me to own user experience design, Swift implementation, build pipelines, and App Store delivery end to end—often including the supporting marketing sites and galleries you see here.\n\nMy technical toolkit spans location services, real-time backends with Firestore and Auth, AVFoundation media capture, VIN scanning/decoding, and the admin tooling that keeps operations running smoothly. I gravitate toward simplifying complex, multi-step workflows for people on the go.\n\nOutside of code I'm usually reading the news, sharing observations on Twitter, or experimenting with the next idea I want to build.",
+            "highlights": [
+                "Current role: Xcode tools and frameworks engineer at Apple",
+                "Delivered paired customer/pro apps for marketplaces and on-demand services",
+                "Fluent in SwiftUI/UIKit, real-time data sync, media capture, and distribution pipelines",
+                "Blend design, tooling, and platform knowledge to deliver polished releases"
+            ],
+            "photos": [
+                {
+                    "src": "photos/Street/ARIN0743.jpg",
+                    "alt": "Street photography"
+                }
+            ]
+        }
+    ]
+}

@@ -1,23 +1,9 @@
 // === CONFIGURATION ===
 const BLOG_JSON_PATH = "blog.json";
+const ABOUT_JSON_PATH = "about.json";
 const LINK_BUTTONS = [
   { label: "Instagram", href: "https://www.instagram.com/arindavoodian", newTab: true },
 ];
-const ABOUT_CONTENT = {
-  heading: "About Me",
-  paragraphs: [
-    "I'm an Apple platforms engineer currently working on Xcode tools and frameworks, spending most of my day inside Swift, Xcode, Sketch, and the abstractions that make shipping code faster. I focus on pairing intentional product decisions with platform-specific craftsmanship so each interaction feels purposeful.",
-    "Before Apple I architected and delivered customer-and-pro ecosystems such as Mizo, Uhoh, Point Automotive, and Migo across iOS, macOS, tvOS, and watchOS. Those programs required me to own user experience design, Swift implementation, build pipelines, and App Store delivery end to end—often including the supporting marketing sites and galleries you see here.",
-    "My technical toolkit spans location services, real-time backends with Firestore and Auth, AVFoundation media capture, VIN scanning/decoding, and the admin tooling that keeps operations running smoothly. I gravitate toward simplifying complex, multi-step workflows for people on the go.",
-    "Outside of code I'm usually reading the news, sharing observations on Twitter, or experimenting with the next idea I want to build.",
-  ],
-  highlights: [
-    "Current role: Xcode tools and frameworks engineer at Apple",
-    "Delivered paired customer/pro apps for marketplaces and on-demand services",
-    "Fluent in SwiftUI/UIKit, real-time data sync, media capture, and distribution pipelines",
-    "Blend design, tooling, and platform knowledge to deliver polished releases",
-  ],
-};
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -87,27 +73,17 @@ function setStatusMessage(statusEl, message) {
 }
 
 function showAboutSection(statusEl, mainContentEl) {
-  if (!statusEl || !mainContentEl) {
-    return;
-  }
-  setStatusMessage(statusEl, "");
-  mainContentEl.innerHTML = "";
-  const { heading, paragraphs = [], highlights = [] } = ABOUT_CONTENT;
-  const paragraphsHtml = paragraphs
-    .map((text) => `<p>${text}</p>`)
-    .join("\n");
-  const highlightsHtml = highlights.length
-    ? `<ul class="about-highlights">${highlights
-      .map((item) => `<li>${item}</li>`)
-      .join("")}</ul>`
-    : "";
-  mainContentEl.innerHTML = `
-    <article class="about-card">
-      <h3>${heading}</h3>
-      ${paragraphsHtml}
-      ${highlightsHtml}
-    </article>
-  `;
+  setStatusMessage(statusEl, "Loading about section…");
+
+  loadJsonData(ABOUT_JSON_PATH)
+    .then((posts) => {
+      setStatusMessage(statusEl, "");
+      renderPosts(posts, mainContentEl);
+    })
+    .catch((err) => {
+      console.error(err);
+      setStatusMessage(statusEl, "Could not load about information.");
+    });
 }
 
 
@@ -165,16 +141,18 @@ function openLightbox(src, caption) {
 
 // === Blog ===
 
-async function loadBlogPosts() {
+// === DATA LOADING ===
+
+async function loadJsonData(path) {
   try {
-    const response = await fetch(BLOG_JSON_PATH, { cache: "no-store" });
+    const response = await fetch(path, { cache: "no-store" });
     if (!response.ok) {
-      throw new Error(`Failed to load blog posts: ${response.status}`);
+      throw new Error(`Failed to load data from ${path}: ${response.status}`);
     }
     const data = await response.json();
     return data.posts || [];
   } catch (err) {
-    console.error("Error loading blog posts:", err);
+    console.error(`Error loading data from ${path}:`, err);
     return [];
   }
 }
@@ -189,16 +167,17 @@ function formatDate(dateString) {
   }
 }
 
-function renderBlogPosts(posts, mainContentEl) {
+function renderPosts(posts, mainContentEl) {
   mainContentEl.innerHTML = "";
 
   if (!posts || posts.length === 0) {
-    mainContentEl.innerHTML = '<p class="status-message">No blog posts yet.</p>';
+    mainContentEl.innerHTML = '<p class="status-message">No content found.</p>';
     return;
   }
 
-  // Sort by date, newest first
+  // Sort by date, newest first (if dates exist)
   const sortedPosts = [...posts].sort((a, b) => {
+    if (!a.date || !b.date) return 0;
     return new Date(b.date) - new Date(a.date);
   });
 
@@ -231,6 +210,18 @@ function renderBlogPosts(posts, mainContentEl) {
       textEl.className = "blog-post-text";
       textEl.textContent = post.text;
       article.appendChild(textEl);
+    }
+
+    // Highlights (specific to About if needed, but rendered in blog style)
+    if (post.highlights && post.highlights.length > 0) {
+      const highlightsList = document.createElement("ul");
+      highlightsList.className = "about-highlights"; // Keep class for possible specific styling, but it's inside .blog-post now
+      post.highlights.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        highlightsList.appendChild(li);
+      });
+      article.appendChild(highlightsList);
     }
 
     // Photos
@@ -272,10 +263,10 @@ function renderBlogPosts(posts, mainContentEl) {
 function showBlogSection(statusEl, mainContentEl) {
   setStatusMessage(statusEl, "Loading blog posts…");
 
-  loadBlogPosts()
+  loadJsonData(BLOG_JSON_PATH)
     .then((posts) => {
       setStatusMessage(statusEl, "");
-      renderBlogPosts(posts, mainContentEl);
+      renderPosts(posts, mainContentEl);
     })
     .catch((err) => {
       console.error(err);

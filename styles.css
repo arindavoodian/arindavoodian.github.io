@@ -269,37 +269,13 @@ body {
 }
 
 
-.about-card {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  color: var(--fg);
-  line-height: 1.7;
-}
-
-.about-card h3 {
-  font-family: "Outfit", sans-serif;
-  margin: 0 0 16px;
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--fg-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.about-card p {
-  margin: 0 0 16px;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--fg-muted);
-}
-
+/* .about-highlights style is kept as it's used within blog-posts for about content */
 .about-highlights {
-  margin: 24px 0 0;
+  margin: 16px 0 0;
   padding-left: 20px;
   font-size: 1rem;
   line-height: 1.6;
-  color: var(--fg-muted);
+  color: var(--fg);
 }
 
 .about-highlights li {
