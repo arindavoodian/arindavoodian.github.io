@@ -111,7 +111,7 @@ body {
   right: 0;
   height: 60px;
   background: linear-gradient(to bottom, var(--bg) 20%, transparent 100%);
-  z-index: 11;
+  z-index: 5;
   pointer-events: none;
 }
 
