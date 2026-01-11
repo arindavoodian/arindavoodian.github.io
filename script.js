@@ -168,6 +168,12 @@ function formatDate(dateString) {
 }
 
 function renderPosts(posts, mainContentEl) {
+  // Remove then re-add fade-in class to trigger animation
+  mainContentEl.classList.remove("fade-in");
+  // Trigger reflow
+  void mainContentEl.offsetWidth;
+  mainContentEl.classList.add("fade-in");
+
   mainContentEl.innerHTML = "";
 
   if (!posts || posts.length === 0) {
