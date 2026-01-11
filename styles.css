@@ -104,6 +104,17 @@ body {
   transition: all 0.2s ease;
 }
 
+.top-gradient-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--bg) 20%, transparent 100%);
+  z-index: 11;
+  pointer-events: none;
+}
+
 .topbar:hover {
   box-shadow: var(--shadow-md);
 }
