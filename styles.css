@@ -78,8 +78,8 @@ body {
   font-family: "Lora", serif;
   background: var(--bg);
   color: var(--fg);
-  line-height: 1.8;
-  font-size: 19px;
+  line-height: 1.5;
+  font-size: 17px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -288,8 +288,8 @@ body {
 .about-highlights {
   margin: 16px 0 0;
   padding-left: 20px;
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.5;
   color: var(--fg);
 }
 
@@ -480,9 +480,9 @@ body {
 }
 
 .blog-post-text {
-  font-size: 1.125rem;
+  font-size: 1rem;
   color: var(--fg);
-  line-height: 1.8;
+  line-height: 1.5;
   margin-bottom: 24px;
   white-space: pre-wrap;
 }
