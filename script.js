@@ -210,54 +210,123 @@ function renderPosts(posts, mainContentEl) {
       article.appendChild(titleEl);
     }
 
-    // Text
-    if (post.text) {
-      const textEl = document.createElement("div");
-      textEl.className = "blog-post-text";
-      textEl.textContent = post.text;
-      article.appendChild(textEl);
-    }
+    // Flexible content rendering
+    if (post.content && Array.isArray(post.content)) {
+      post.content.forEach(block => {
+        if (block.type === 'text') {
+          const textEl = document.createElement("div");
+          textEl.className = "blog-post-text";
+          textEl.textContent = block.value;
+          article.appendChild(textEl);
+        } else if (block.type === 'image' || block.type === 'photo') {
+          const photosContainer = document.createElement("div");
+          photosContainer.className = "blog-post-photos single-photo";
 
-    // Highlights (specific to About if needed, but rendered in blog style)
-    if (post.highlights && post.highlights.length > 0) {
-      const highlightsList = document.createElement("ul");
-      highlightsList.className = "about-highlights"; // Keep class for possible specific styling, but it's inside .blog-post now
-      post.highlights.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        highlightsList.appendChild(li);
+          const photoWrapper = document.createElement("div");
+          photoWrapper.className = "blog-post-photo";
+
+          const img = document.createElement("img");
+          img.src = normalizePhotoSrc(block.src);
+          img.alt = block.alt || post.title || "";
+          img.loading = "lazy";
+
+          photoWrapper.appendChild(img);
+          photosContainer.appendChild(photoWrapper);
+
+          photoWrapper.addEventListener("click", () => {
+            openLightbox(img.src, block.alt || post.title || "");
+          });
+
+          article.appendChild(photosContainer);
+        } else if (block.type === 'images' || block.type === 'photos') {
+          const photosContainer = document.createElement("div");
+          photosContainer.className = "blog-post-photos";
+          if (block.items && block.items.length === 1) {
+            photosContainer.classList.add("single-photo");
+          }
+
+          if (block.items) {
+            block.items.forEach(photo => {
+              const photoWrapper = document.createElement("div");
+              photoWrapper.className = "blog-post-photo";
+
+              const img = document.createElement("img");
+              img.src = normalizePhotoSrc(photo.src);
+              img.alt = photo.alt || post.title || "";
+              img.loading = "lazy";
+
+              photoWrapper.appendChild(img);
+              photosContainer.appendChild(photoWrapper);
+
+              photoWrapper.addEventListener("click", () => {
+                openLightbox(img.src, photo.alt || post.title || "");
+              });
+            });
+          }
+          article.appendChild(photosContainer);
+        } else if (block.type === 'highlights' || block.type === 'bullets') {
+          if (block.items && block.items.length > 0) {
+            const highlightsList = document.createElement("ul");
+            highlightsList.className = "about-highlights";
+            block.items.forEach(item => {
+              const li = document.createElement("li");
+              li.textContent = item;
+              highlightsList.appendChild(li);
+            });
+            article.appendChild(highlightsList);
+          }
+        }
       });
-      article.appendChild(highlightsList);
-    }
-
-    // Photos
-    if (post.photos && post.photos.length > 0) {
-      const photosContainer = document.createElement("div");
-      photosContainer.className = "blog-post-photos";
-      if (post.photos.length === 1) {
-        photosContainer.classList.add("single-photo");
+    } else {
+      // Backward compatibility for fixed structure
+      // Text
+      if (post.text) {
+        const textEl = document.createElement("div");
+        textEl.className = "blog-post-text";
+        textEl.textContent = post.text;
+        article.appendChild(textEl);
       }
 
-      post.photos.forEach((photo) => {
-        const photoWrapper = document.createElement("div");
-        photoWrapper.className = "blog-post-photo";
-
-        const img = document.createElement("img");
-        img.src = normalizePhotoSrc(photo.src);
-        img.alt = photo.alt || post.title || "";
-        img.loading = "lazy";
-
-        photoWrapper.appendChild(img);
-        photosContainer.appendChild(photoWrapper);
-
-        // Click to open lightbox
-        photoWrapper.addEventListener("click", () => {
-          const caption = photo.alt || post.title || "";
-          openLightbox(img.src, caption);
+      // Highlights
+      if (post.highlights && post.highlights.length > 0) {
+        const highlightsList = document.createElement("ul");
+        highlightsList.className = "about-highlights";
+        post.highlights.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          highlightsList.appendChild(li);
         });
-      });
+        article.appendChild(highlightsList);
+      }
 
-      article.appendChild(photosContainer);
+      // Photos
+      if (post.photos && post.photos.length > 0) {
+        const photosContainer = document.createElement("div");
+        photosContainer.className = "blog-post-photos";
+        if (post.photos.length === 1) {
+          photosContainer.classList.add("single-photo");
+        }
+
+        post.photos.forEach((photo) => {
+          const photoWrapper = document.createElement("div");
+          photoWrapper.className = "blog-post-photo";
+
+          const img = document.createElement("img");
+          img.src = normalizePhotoSrc(photo.src);
+          img.alt = photo.alt || post.title || "";
+          img.loading = "lazy";
+
+          photoWrapper.appendChild(img);
+          photosContainer.appendChild(photoWrapper);
+
+          photoWrapper.addEventListener("click", () => {
+            const caption = photo.alt || post.title || "";
+            openLightbox(img.src, caption);
+          });
+        });
+
+        article.appendChild(photosContainer);
+      }
     }
 
     container.appendChild(article);

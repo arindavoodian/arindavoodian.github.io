@@ -1,6 +1,51 @@
 {
   "posts": [
     {
+      "id": "interleaved-post",
+      "date": "2026-01-11",
+      "title": "Interleaved Content Demo",
+      "content": [
+        {
+          "type": "text",
+          "value": "This post demonstrates how you can now interleave text and images in any order. For example, here is some introductory text followed by a single image."
+        },
+        {
+          "type": "image",
+          "src": "photos/Street/ARIN0743.jpg",
+          "alt": "A single street photo"
+        },
+        {
+          "type": "text",
+          "value": "And here is some more text that follows the image. Next, we can have a grid of multiple photos."
+        },
+        {
+          "type": "images",
+          "items": [
+            {
+              "src": "photos/Landscapes/ARIN0829.jpg",
+              "alt": "Landscape 1"
+            },
+            {
+              "src": "photos/Street/ARIN0743.jpg",
+              "alt": "Street 2"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "value": "Finally, we can end with some concluding thoughts or bullet points."
+        },
+        {
+          "type": "highlights",
+          "items": [
+            "Flexibility to mix text and photos",
+            "Support for single images or grids",
+            "Arbitrary number of blocks"
+          ]
+        }
+      ]
+    },
+    {
       "id": "three-images-post",
       "date": "2026-01-10",
       "title": "A Trio of Moments",
