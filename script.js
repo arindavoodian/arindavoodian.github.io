@@ -73,7 +73,7 @@ function setStatusMessage(statusEl, message) {
 }
 
 function showAboutSection(statusEl, mainContentEl) {
-  setStatusMessage(statusEl, "Loading about section…");
+  // setStatusMessage(statusEl, "Loading about section…");
 
   loadJsonData(ABOUT_JSON_PATH)
     .then((posts) => {
@@ -336,7 +336,7 @@ function renderPosts(posts, mainContentEl) {
 }
 
 function showBlogSection(statusEl, mainContentEl) {
-  setStatusMessage(statusEl, "Loading blog posts…");
+  // setStatusMessage(statusEl, "Loading blog posts…");
 
   loadJsonData(BLOG_JSON_PATH)
     .then((posts) => {
