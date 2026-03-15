@@ -10,9 +10,6 @@
   --accent-hover: #7c4e1e;
   --border: #d4d3cc;
   --border-hover: #c4c3bb;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -33,9 +30,6 @@
   --accent-hover: #f0bc72;
   --border: #2a2520;
   --border-hover: #38322a;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
   --bg-glass: rgba(14, 12, 10, 0.8);
   --border-glass: rgba(255, 255, 255, 0.08);
 }
@@ -54,9 +48,6 @@
     --accent-hover: #f0bc72;
     --border: #2a2520;
     --border-hover: #38322a;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
     --bg-glass: rgba(14, 12, 10, 0.8);
     --border-glass: rgba(255, 255, 255, 0.08);
   }
@@ -119,9 +110,6 @@ body {
   pointer-events: none;
 }
 
-.topbar:hover {
-  box-shadow: var(--shadow-md);
-}
 
 .brand {
   font-family: "Outfit", sans-serif;
@@ -179,7 +167,6 @@ body {
 .nav-button.active {
   background: var(--bg-elevated);
   color: var(--fg);
-  box-shadow: var(--shadow-sm);
 }
 
 .footer-links {
@@ -339,7 +326,6 @@ body {
 
 .gallery-item:hover {
   border-color: var(--accent);
-  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
@@ -388,7 +374,6 @@ body {
   max-width: min(90vw, 1200px);
   max-height: min(85vh, 900px);
   border-radius: var(--radius-lg);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .lightbox-close {
@@ -455,7 +440,6 @@ body {
 
 .blog-post:hover {
   border-color: var(--border-hover);
-  box-shadow: var(--shadow-md);
 }
 
 @media (max-width: 768px) {
@@ -528,7 +512,6 @@ body {
 
 .blog-post-photo:hover {
   border-color: var(--accent);
-  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
