@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Arin Davoodian</title>
     <link>https://arindavoodian.github.io</link>
@@ -14,7 +14,12 @@
       <pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate>
       <description><![CDATA[
         <p>This post demonstrates how you can now interleave text and images in any order. For example, here is some introductory text followed by a single image.</p>
+        <p><img src="https://arindavoodian.github.io/photos/Street/ARIN0743.jpg" alt="A single street photo" style="max-width:100%;height:auto;" /></p>
         <p>And here is some more text that follows the image. Next, we can have a grid of multiple photos.</p>
+        <p>
+          <img src="https://arindavoodian.github.io/photos/Landscapes/ARIN0829.jpg" alt="Landscape 1" style="max-width:49%;height:auto;" />
+          <img src="https://arindavoodian.github.io/photos/Street/ARIN0743.jpg" alt="Street 2" style="max-width:49%;height:auto;" />
+        </p>
         <p>Finally, we can end with some concluding thoughts or bullet points.</p>
         <ul>
           <li>Flexibility to mix text and photos</li>
@@ -22,6 +27,7 @@
           <li>Arbitrary number of blocks</li>
         </ul>
       ]]></description>
+      <media:content url="https://arindavoodian.github.io/photos/Street/ARIN0743.jpg" medium="image" />
     </item>
 
     <item>
@@ -31,7 +37,11 @@
       <pubDate>Sat, 10 Jan 2026 00:00:00 +0000</pubDate>
       <description><![CDATA[
         <p>Testing the grid layout with three different perspectives. This post demonstrates how images are displayed when multiple photos are attached to a single entry.</p>
+        <p><img src="https://arindavoodian.github.io/photos/Street/ARIN0743.jpg" alt="Street moment" style="max-width:100%;height:auto;" /></p>
+        <p><img src="https://arindavoodian.github.io/photos/Landscapes/ARIN0829.jpg" alt="Landscape view" style="max-width:100%;height:auto;" /></p>
+        <p><img src="https://arindavoodian.github.io/photos/Street/ARIN0743.jpg" alt="Street moment secondary" style="max-width:100%;height:auto;" /></p>
       ]]></description>
+      <media:content url="https://arindavoodian.github.io/photos/Street/ARIN0743.jpg" medium="image" />
     </item>
 
     <item>
@@ -42,7 +52,9 @@
       <description><![CDATA[
         <p>This is where I share my thoughts, observations, and captured moments. Each post might include photos from my travels, daily life, or just things that caught my eye.</p>
         <p>The design is intentionally minimal—just enough structure to let the content breathe, but nothing that gets in the way of the experience.</p>
+        <p><img src="https://arindavoodian.github.io/photos/Street/ARIN0743.jpg" alt="Street photography" style="max-width:100%;height:auto;" /></p>
       ]]></description>
+      <media:content url="https://arindavoodian.github.io/photos/Street/ARIN0743.jpg" medium="image" />
     </item>
 
     <item>
@@ -52,7 +64,9 @@
       <pubDate>Wed, 07 Jan 2026 00:00:00 +0000</pubDate>
       <description><![CDATA[
         <p>Sometimes you find the perfect moment when light and landscape align.</p>
+        <p><img src="https://arindavoodian.github.io/photos/Landscapes/ARIN0829.jpg" alt="Landscape view" style="max-width:100%;height:auto;" /></p>
       ]]></description>
+      <media:content url="https://arindavoodian.github.io/photos/Landscapes/ARIN0829.jpg" medium="image" />
     </item>
 
   </channel>
