@@ -90,7 +90,7 @@ body {
   background: var(--bg-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border-glass);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 16px 24px;
   position: sticky;
@@ -196,7 +196,6 @@ body {
 }
 
 .icon-button:hover {
-  border-color: var(--accent);
   color: var(--accent);
   background: var(--bg-soft);
   transform: translateY(-1px);
