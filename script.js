@@ -3,6 +3,7 @@ const BLOG_JSON_PATH = "blog.json";
 const ABOUT_JSON_PATH = "about.json";
 const LINK_BUTTONS = [
   { label: "Instagram", href: "https://www.instagram.com/arindavoodian", newTab: true },
+  { label: "RSS", href: "https://arindavoodian.github.io/feed.xml", newTab: true },
 ];
 
 
